@@ -25,3 +25,22 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
+ext {
+    version_retrofit = "2.5.0"
+    deps_retrofit = "com.squareup.retrofit2:retrofit:$version_retrofit"
+    deps_retrofit_rxjava = "com.squareup.retrofit2:adapter-rxjava2:$version_retrofit"
+    deps_retrofit_moshi = "com.squareup.retrofit2:converter-moshi:$version_retrofit"
+    deps_okttp_logging = "com.squareup.okhttp3:logging-interceptor:3.12.1"
+
+    deps_rxjava = "io.reactivex.rxjava2:rxjava:2.2.4"
+    deps_rxandroid = "io.reactivex.rxjava2:rxandroid:2.1.0"
+
+    deps_auto_value = "com.google.auto.value:auto-value:1.5.4"
+    deps_auto_factory = "com.google.auto.factory:auto-factory:1.0-beta6"
+
+    version_auto_moshi = "0.4.5"
+    deps_auto_moshi = "com.ryanharter.auto.value:auto-value-moshi:$version_auto_moshi"
+    deps_auto_moshi_annotation = "com.ryanharter.auto.value:auto-value-moshi-annotations:$version_auto_moshi"
+}
