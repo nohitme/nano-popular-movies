@@ -6,7 +6,7 @@ import retrofit2.http.GET;
 
 public interface MovieDbService {
 
-    @GET("configuration")
+    @GET("/3/configuration")
     Single<Configuration> getConfiguration();
 
 }

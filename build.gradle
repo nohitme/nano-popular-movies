@@ -43,4 +43,13 @@ ext {
     version_auto_moshi = "0.4.5"
     deps_auto_moshi = "com.ryanharter.auto.value:auto-value-moshi:$version_auto_moshi"
     deps_auto_moshi_annotation = "com.ryanharter.auto.value:auto-value-moshi-annotations:$version_auto_moshi"
+
+    version_dagger = "2.20"
+    deps_dagger = "com.google.dagger:dagger:$version_dagger"
+    deps_dagger_compiler = "com.google.dagger:dagger-compiler:$version_dagger"
+    deps_dagger_android = "com.google.dagger:dagger-android:$version_dagger"
+    deps_dagger_android_support = "com.google.dagger:dagger-android-support:$version_dagger"
+    deps_dagger_android_compiler = "com.google.dagger:dagger-android-processor:$version_dagger"
+
+    deps_guava = "com.google.guava:guava:27.0.1-android"
 }

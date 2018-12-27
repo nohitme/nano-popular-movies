@@ -27,9 +27,14 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0-alpha02'
 
     implementation deps_rxandroid
-    implementation deps_retrofit_rxjava
-    implementation deps_retrofit_moshi
     implementation deps_okttp_logging
+
+    implementation deps_guava
+    implementation deps_dagger
+    implementation deps_dagger_android
+    implementation deps_dagger_android_support
+    annotationProcessor deps_dagger_compiler
+    annotationProcessor deps_dagger_android_compiler
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
