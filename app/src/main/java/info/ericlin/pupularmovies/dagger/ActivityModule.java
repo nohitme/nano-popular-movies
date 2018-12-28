@@ -7,6 +7,6 @@ import info.ericlin.pupularmovies.MainActivity;
 @Module
 public abstract class ActivityModule {
 
-    @ContributesAndroidInjector
-    abstract MainActivity mainActivity();
+  @ContributesAndroidInjector
+  abstract MainActivity mainActivity();
 }

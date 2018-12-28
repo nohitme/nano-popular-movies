@@ -12,27 +12,26 @@ import io.reactivex.annotations.NonNull;
 @AutoValue
 public abstract class Configuration {
 
+  @NonNull
+  public abstract Images images();
+
+  public static JsonAdapter<Configuration> jsonAdapter(Moshi moshi) {
+    return new AutoValue_Configuration.MoshiJsonAdapter(moshi);
+  }
+
+  @AutoValue
+  public abstract static class Images {
+
     @NonNull
-    public abstract Images images();
+    @Json(name = "secure_base_url")
+    public abstract String secureBaseUrl();
 
-    public static JsonAdapter<Configuration> jsonAdapter(Moshi moshi) {
-        return new AutoValue_Configuration.MoshiJsonAdapter(moshi);
+    @NonNull
+    @Json(name = "poster_sizes")
+    public abstract List<String> posterSizes();
+
+    public static JsonAdapter<Images> jsonAdapter(Moshi moshi) {
+      return new AutoValue_Configuration_Images.MoshiJsonAdapter(moshi);
     }
-
-    @AutoValue
-    public static abstract class Images {
-
-        @NonNull
-        @Json(name = "secure_base_url")
-        public abstract String secureBaseUrl();
-
-        @NonNull
-        @Json(name = "poster_sizes")
-        public abstract List<String> posterSizes();
-
-        public static JsonAdapter<Images> jsonAdapter(Moshi moshi) {
-            return new AutoValue_Configuration_Images.MoshiJsonAdapter(moshi);
-        }
-    }
-
+  }
 }

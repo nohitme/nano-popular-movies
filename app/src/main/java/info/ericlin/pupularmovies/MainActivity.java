@@ -14,19 +14,21 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Inject
-    MovieDbService movieDbService;
+  @Inject MovieDbService movieDbService;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    AndroidInjection.inject(this);
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
 
-        movieDbService.getConfiguration().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(c -> {
-                    Toast.makeText(this, c.toString(), Toast.LENGTH_LONG).show();
-                });
-    }
+    movieDbService
+        .getConfiguration()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(
+            c -> {
+              Toast.makeText(this, c.toString(), Toast.LENGTH_LONG).show();
+            });
+  }
 }

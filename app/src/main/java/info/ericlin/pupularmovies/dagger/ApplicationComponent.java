@@ -12,21 +12,22 @@ import info.ericlin.moviedb.MovieDbModule;
 import info.ericlin.pupularmovies.MovieApplication;
 
 @Singleton
-@Component(modules = {
-        AndroidSupportInjectionModule.class,
-        ApplicationModule.class,
-        ActivityModule.class,
-        OkHttpModule.class,
-        MovieDbModule.class,
-})
+@Component(
+    modules = {
+      AndroidSupportInjectionModule.class,
+      ApplicationModule.class,
+      ActivityModule.class,
+      OkHttpModule.class,
+      MovieDbModule.class,
+    })
 public interface ApplicationComponent extends AndroidInjector<MovieApplication> {
 
-    @Component.Builder
-    interface Builder {
+  @Component.Builder
+  interface Builder {
 
-        @BindsInstance
-        ApplicationComponent.Builder application(Application application);
+    @BindsInstance
+    ApplicationComponent.Builder application(Application application);
 
-        ApplicationComponent build();
-    }
+    ApplicationComponent build();
+  }
 }

@@ -9,8 +9,8 @@ import dagger.Provides;
 @Module
 public class ApplicationModule {
 
-    @Provides
-    Context context(Application application) {
-        return application;
-    }
+  @Provides
+  Context context(Application application) {
+    return application;
+  }
 }

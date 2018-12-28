@@ -12,19 +12,20 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 @Module
 public class MovieDbModule {
 
-    private static final String MOVIE_DB_BASE_URL = "https://api.themoviedb.org";
+  private static final String MOVIE_DB_BASE_URL = "https://api.themoviedb.org";
 
-    @Provides
-    MovieDbService movieDbService(OkHttpClient okHttpClient) {
-        Moshi moshi = new Moshi.Builder().add(MovieDbAdapterFactory.create()).build();
+  @Provides
+  MovieDbService movieDbService(OkHttpClient okHttpClient) {
+    Moshi moshi = new Moshi.Builder().add(MovieDbAdapterFactory.create()).build();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(okHttpClient)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .baseUrl(MOVIE_DB_BASE_URL)
-                .build();
+    Retrofit retrofit =
+        new Retrofit.Builder()
+            .client(okHttpClient)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .baseUrl(MOVIE_DB_BASE_URL)
+            .build();
 
-        return retrofit.create(MovieDbService.class);
-    }
+    return retrofit.create(MovieDbService.class);
+  }
 }
