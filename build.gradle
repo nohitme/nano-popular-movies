@@ -51,6 +51,16 @@ ext {
     deps_dagger_android_support = "com.google.dagger:dagger-android-support:$version_dagger"
     deps_dagger_android_compiler = "com.google.dagger:dagger-android-processor:$version_dagger"
 
+    version_butter_knife = "9.0.0-rc3"
+    deps_butter_knife = "com.jakewharton:butterknife:$version_butter_knife"
+    deps_butter_knife_compiler = "com.jakewharton:butterknife-compiler:$version_butter_knife"
+
+    version_glide = "4.8.0"
+    deps_glide = "com.github.bumptech.glide:glide:$version_glide"
+    deps_glide_okhttp = "com.github.bumptech.glide:okhttp3-integration:$version_glide"
+    deps_glide_annotations = "com.github.bumptech.glide:annotations:$version_glide"
+    deps_glide_compiler = "com.github.bumptech.glide:compiler:$version_glide"
+
     deps_guava = "com.google.guava:guava:27.0.1-android"
 
     deps_timber = "com.jakewharton.timber:timber:4.7.1"

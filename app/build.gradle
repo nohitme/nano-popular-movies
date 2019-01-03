@@ -37,6 +37,13 @@ dependencies {
     annotationProcessor deps_dagger_android_compiler
 
     implementation deps_timber
+    implementation deps_butter_knife
+    annotationProcessor deps_butter_knife_compiler
+
+    implementation deps_glide
+    implementation deps_glide_okhttp
+    implementation deps_glide_annotations
+    annotationProcessor deps_glide_compiler
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
