@@ -52,4 +52,6 @@ ext {
     deps_dagger_android_compiler = "com.google.dagger:dagger-android-processor:$version_dagger"
 
     deps_guava = "com.google.guava:guava:27.0.1-android"
+
+    deps_timber = "com.jakewharton.timber:timber:4.7.1"
 }

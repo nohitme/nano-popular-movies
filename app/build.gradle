@@ -36,6 +36,8 @@ dependencies {
     annotationProcessor deps_dagger_compiler
     annotationProcessor deps_dagger_android_compiler
 
+    implementation deps_timber
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'

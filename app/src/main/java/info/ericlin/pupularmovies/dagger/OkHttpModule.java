@@ -19,6 +19,7 @@ import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import timber.log.Timber;
 
 @Module
 class OkHttpModule {
@@ -41,7 +42,7 @@ class OkHttpModule {
       builder.addInterceptor(interceptor);
     }
 
-    HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+    HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(Timber::v);
     loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
     return builder.addNetworkInterceptor(loggingInterceptor).build();
