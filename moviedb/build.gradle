@@ -10,6 +10,11 @@ android {
         versionName "1.0"
         buildConfigField("String", "MOVIE_DB_API_KEY", "\"${getMovieDbApiKey()}\"")
     }
+
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
 
 def getMovieDbApiKey() {
@@ -33,4 +38,9 @@ dependencies {
 
     compileOnly deps_auto_moshi_annotation
     annotationProcessor deps_auto_moshi
+
+    implementation deps_timber
+
+    // for the image path loader
+    compileOnly deps_glide
 }

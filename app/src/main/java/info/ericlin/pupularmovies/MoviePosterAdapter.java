@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.ListAdapter;
 
 import com.google.common.base.Objects;
 
+import info.ericlin.moviedb.glide.MovieDbImagePath;
 import info.ericlin.moviedb.model.Movie;
+import info.ericlin.pupularmovies.dagger.GlideApp;
 
 public class MoviePosterAdapter extends ListAdapter<Movie, MoviePosterViewHolder> {
 
@@ -54,10 +56,8 @@ public class MoviePosterAdapter extends ListAdapter<Movie, MoviePosterViewHolder
 
     GlideApp.with(holder.posterImage).clear(holder.posterImage);
 
-    // TODO: get based url from configuration
-    final String imageUrl = "https://image.tmdb.org/t/p/original" + movie.poster_path();
     GlideApp.with(holder.posterImage)
-        .load(imageUrl)
+        .load(MovieDbImagePath.poster(movie.poster_path()))
         .placeholder(R.drawable.placeholder_600x900)
         .into(holder.posterImage);
   }

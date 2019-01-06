@@ -10,7 +10,6 @@ import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 import info.ericlin.moviedb.MovieDbModule;
 import info.ericlin.pupularmovies.MovieApplication;
-import okhttp3.OkHttpClient;
 
 @Singleton
 @Component(
@@ -24,7 +23,7 @@ import okhttp3.OkHttpClient;
 public interface ApplicationComponent extends AndroidInjector<MovieApplication> {
 
   // exposed for glide
-  OkHttpClient okHttpClient();
+  void inject(MovieGlideModule movieGlideModule);
 
   @Component.Builder
   interface Builder {

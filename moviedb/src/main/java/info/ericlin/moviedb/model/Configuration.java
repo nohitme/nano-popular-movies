@@ -27,6 +27,9 @@ public abstract class Configuration {
     @NonNull
     public abstract List<String> poster_sizes();
 
+    @NonNull
+    public abstract List<String> backdrop_sizes();
+
     public static JsonAdapter<Images> jsonAdapter(Moshi moshi) {
       return new AutoValue_Configuration_Images.MoshiJsonAdapter(moshi);
     }

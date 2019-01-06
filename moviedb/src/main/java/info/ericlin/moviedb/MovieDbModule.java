@@ -4,6 +4,7 @@ import com.squareup.moshi.Moshi;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -21,7 +22,7 @@ public class MovieDbModule {
     Retrofit retrofit =
         new Retrofit.Builder()
             .client(okHttpClient)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .baseUrl(configuration.baseUrl())
             .build();
