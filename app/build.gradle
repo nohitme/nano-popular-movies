@@ -10,8 +10,6 @@ android {
         versionName "1.0"
 
         javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = false
-
-        buildConfigField("String", "MOVIE_DB_API_KEY", "\"${MOVIE_DB_API_KEY}\"")
     }
     compileOptions {
         sourceCompatibility = '1.8'

@@ -3,20 +3,16 @@ package info.ericlin.pupularmovies.dagger;
 import android.content.Context;
 import android.net.TrafficStats;
 
-import com.google.common.collect.Lists;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.List;
 
 import javax.net.SocketFactory;
 
 import dagger.Module;
 import dagger.Provides;
-import info.ericlin.pupularmovies.MovieDbApiKeyInterceptor;
+import info.ericlin.moviedb.MovieDbApiKeyInterceptor;
 import okhttp3.Cache;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import timber.log.Timber;
@@ -25,7 +21,7 @@ import timber.log.Timber;
 class OkHttpModule {
 
   @Provides
-  OkHttpClient okHttpClient(Context context) {
+  OkHttpClient okHttpClient(Context context, MovieDbApiKeyInterceptor movieDbApiKeyInterceptor) {
 
     OkHttpClient.Builder builder = new OkHttpClient.Builder();
     // cache
@@ -38,18 +34,12 @@ class OkHttpModule {
     builder.socketFactory(new TagSocketFactory());
 
     // interceptors
-    for (Interceptor interceptor : getInterceptors()) {
-      builder.addInterceptor(interceptor);
-    }
+    builder.addInterceptor(movieDbApiKeyInterceptor);
 
     HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(Timber::v);
     loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
     return builder.addNetworkInterceptor(loggingInterceptor).build();
-  }
-
-  private List<Interceptor> getInterceptors() {
-    return Lists.newArrayList(new MovieDbApiKeyInterceptor());
   }
 
   /**

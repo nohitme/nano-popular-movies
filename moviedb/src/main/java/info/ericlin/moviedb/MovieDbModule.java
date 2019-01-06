@@ -15,7 +15,7 @@ public class MovieDbModule {
   private static final String MOVIE_DB_BASE_URL = "https://api.themoviedb.org";
 
   @Provides
-  MovieDbService movieDbService(OkHttpClient okHttpClient) {
+  MovieDbService movieDbService(OkHttpClient okHttpClient, MovieDbApiConfiguration configuration) {
     Moshi moshi = new Moshi.Builder().add(MovieDbAdapterFactory.create()).build();
 
     Retrofit retrofit =
@@ -23,9 +23,14 @@ public class MovieDbModule {
             .client(okHttpClient)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl(MOVIE_DB_BASE_URL)
+            .baseUrl(configuration.baseUrl())
             .build();
 
     return retrofit.create(MovieDbService.class);
+  }
+
+  @Provides
+  MovieDbApiConfiguration provideMovieDbApiConfiguration() {
+    return MovieDbApiConfiguration.create(MOVIE_DB_BASE_URL, BuildConfig.MOVIE_DB_API_KEY);
   }
 }
