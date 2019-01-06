@@ -1,4 +1,4 @@
-package info.ericlin.pupularmovies;
+package info.ericlin.pupularmovies.paging;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import info.ericlin.pupularmovies.R;
 
 public class MoviePosterViewHolder extends RecyclerView.ViewHolder {
 
@@ -18,7 +19,7 @@ public class MoviePosterViewHolder extends RecyclerView.ViewHolder {
   @BindView(R.id.movie_poster_image)
   ImageView posterImage;
 
-  public MoviePosterViewHolder(@NonNull View itemView) {
+  MoviePosterViewHolder(@NonNull View itemView) {
     super(itemView);
     ButterKnife.bind(this, itemView);
   }

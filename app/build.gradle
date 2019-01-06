@@ -24,6 +24,16 @@ dependencies {
     // needed for resolve warning: https://github.com/bumptech/glide/issues/3124
     implementation 'com.google.android.material:material:1.1.0-alpha02'
 
+    def lifecycle_version = "2.0.0"
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version"
+
+    def paging_version = "2.1.0-rc01"
+    implementation "androidx.paging:paging-runtime:$paging_version"
+    implementation "androidx.paging:paging-rxjava2:$paging_version"
+
     implementation deps_rxandroid
     implementation deps_okttp_logging
 
@@ -33,6 +43,11 @@ dependencies {
     implementation deps_dagger_android_support
     annotationProcessor deps_dagger_compiler
     annotationProcessor deps_dagger_android_compiler
+
+    compileOnly deps_auto_value
+    annotationProcessor deps_auto_value
+    compileOnly deps_auto_factory
+    annotationProcessor deps_auto_factory
 
     implementation deps_timber
     implementation deps_butter_knife

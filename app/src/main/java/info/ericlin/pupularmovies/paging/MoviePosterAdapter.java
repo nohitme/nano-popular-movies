@@ -1,20 +1,21 @@
-package info.ericlin.pupularmovies;
+package info.ericlin.pupularmovies.paging;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
 
 import com.google.common.base.Objects;
 
 import info.ericlin.moviedb.glide.MovieDbImagePath;
 import info.ericlin.moviedb.model.Movie;
+import info.ericlin.pupularmovies.R;
 import info.ericlin.pupularmovies.dagger.GlideApp;
 
-public class MoviePosterAdapter extends ListAdapter<Movie, MoviePosterViewHolder> {
+public class MoviePosterAdapter extends PagedListAdapter<Movie, MoviePosterViewHolder> {
 
   private static final DiffUtil.ItemCallback<Movie> DIFF_CALLBACK =
       new DiffUtil.ItemCallback<Movie>() {
@@ -29,7 +30,7 @@ public class MoviePosterAdapter extends ListAdapter<Movie, MoviePosterViewHolder
         }
       };
 
-  MoviePosterAdapter() {
+  public MoviePosterAdapter() {
     super(DIFF_CALLBACK);
   }
 
@@ -44,6 +45,12 @@ public class MoviePosterAdapter extends ListAdapter<Movie, MoviePosterViewHolder
   @Override
   public void onBindViewHolder(@NonNull MoviePosterViewHolder holder, int position) {
     final Movie movie = getItem(position);
+    if (movie == null) {
+      // TODO: fine.. let's do a "bind" method...
+      GlideApp.with(holder.posterImage).clear(holder.posterImage);
+      holder.posterName.setText(null);
+      return;
+    }
 
     final String name;
     if (Objects.equal(movie.title(), movie.original_title())) {
