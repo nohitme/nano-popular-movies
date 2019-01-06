@@ -51,7 +51,7 @@ ext {
     deps_dagger_android_support = "com.google.dagger:dagger-android-support:$version_dagger"
     deps_dagger_android_compiler = "com.google.dagger:dagger-android-processor:$version_dagger"
 
-    version_butter_knife = "9.0.0-rc3"
+    version_butter_knife = "10.0.0"
     deps_butter_knife = "com.jakewharton:butterknife:$version_butter_knife"
     deps_butter_knife_compiler = "com.jakewharton:butterknife-compiler:$version_butter_knife"
 
