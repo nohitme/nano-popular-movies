@@ -44,10 +44,12 @@ public class MoviePosterAdapter extends PagedListAdapter<Movie, MoviePosterViewH
 
   @Override
   public void onBindViewHolder(@NonNull MoviePosterViewHolder holder, int position) {
+    // always clear previous image loading
+    GlideApp.with(holder.posterImage).clear(holder.posterImage);
+
     final Movie movie = getItem(position);
     if (movie == null) {
       // TODO: fine.. let's do a "bind" method...
-      GlideApp.with(holder.posterImage).clear(holder.posterImage);
       holder.posterName.setText(null);
       return;
     }
@@ -60,8 +62,6 @@ public class MoviePosterAdapter extends PagedListAdapter<Movie, MoviePosterViewH
     }
 
     holder.posterName.setText(name);
-
-    GlideApp.with(holder.posterImage).clear(holder.posterImage);
 
     GlideApp.with(holder.posterImage)
         .load(MovieDbImagePath.poster(movie.poster_path()))
