@@ -19,9 +19,6 @@ public interface MovieDbService {
   @GET("/3/movie/top_rated")
   Single<MovieList> getTopRatedMovies(@Query("page") @Nullable Integer page);
 
-  @GET("/3/movie/latest")
-  Single<MovieList> getLatestMovies(@Query("page") @Nullable Integer page);
-
   @GET("/3/movie/now_playing")
   Single<MovieList> getNowPlayingMovies(@Query("page") @Nullable Integer page);
 
