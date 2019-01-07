@@ -21,6 +21,7 @@ public class MoviePosterViewModel extends AndroidViewModel {
 
   private final MoviePosterDataSourceFactoryFactory moviePosterDataSourceFactoryFactory;
 
+  @Nullable private MovieCategory category;
   @Nullable private LiveData<PagedList<Movie>> movieLists;
 
   public MoviePosterViewModel(
@@ -31,6 +32,13 @@ public class MoviePosterViewModel extends AndroidViewModel {
   }
 
   public void init(@NonNull MovieCategory category) {
+    if (this.category == category) {
+      // don't always recreate the category to avoid losing scrolling position
+      // we don't want to recreate the data source factory every time
+      return;
+    }
+
+    this.category = category;
     final MoviePosterDataSourceFactory dataSourceFactory =
         moviePosterDataSourceFactoryFactory.create(category);
 

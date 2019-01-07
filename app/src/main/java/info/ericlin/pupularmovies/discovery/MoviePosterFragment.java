@@ -35,7 +35,6 @@ public class MoviePosterFragment extends Fragment {
   @BindView(R.id.main_recyclerview)
   RecyclerView recyclerView;
 
-  private MoviePosterAdapter moviePosterAdapter;
   private Unbinder unbinder;
 
   public static MoviePosterFragment newInstance(@NonNull MovieCategory category) {
@@ -78,7 +77,7 @@ public class MoviePosterFragment extends Fragment {
         new StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL);
 
     recyclerView.setLayoutManager(layoutManager);
-    moviePosterAdapter = new MoviePosterAdapter();
+    MoviePosterAdapter moviePosterAdapter = new MoviePosterAdapter();
     recyclerView.setAdapter(moviePosterAdapter);
 
     final MoviePosterViewModel viewModel =
