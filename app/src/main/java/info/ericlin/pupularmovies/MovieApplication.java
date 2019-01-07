@@ -21,9 +21,12 @@ public class MovieApplication extends DaggerApplication {
     Timber.d("timber trees planted, count: %s", Timber.treeCount());
 
     StrictMode.setThreadPolicy(
-        new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().penaltyDeath().build());
-    StrictMode.setVmPolicy(
-        new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().penaltyDeath().build());
+        new StrictMode.ThreadPolicy.Builder()
+            .detectAll()
+            .penaltyLog()
+            .penaltyFlashScreen()
+            .build());
+    StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
   }
 
   public ApplicationComponent getApplicationComponent() {
