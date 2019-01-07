@@ -1,4 +1,4 @@
-package info.ericlin.pupularmovies.paging;
+package info.ericlin.pupularmovies.discovery;
 
 import android.view.LayoutInflater;
 import android.view.View;

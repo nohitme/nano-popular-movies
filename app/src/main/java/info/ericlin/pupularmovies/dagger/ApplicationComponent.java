@@ -15,10 +15,11 @@ import info.ericlin.pupularmovies.MovieApplication;
 @Component(
     modules = {
       AndroidSupportInjectionModule.class,
+      AndroidViewModule.class,
       ApplicationModule.class,
-      ActivityModule.class,
       OkHttpModule.class,
       MovieDbModule.class,
+      ViewModelModule.class,
     })
 public interface ApplicationComponent extends AndroidInjector<MovieApplication> {
 

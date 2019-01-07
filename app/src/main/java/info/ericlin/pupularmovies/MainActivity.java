@@ -4,9 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.LiveData;
-import androidx.paging.LivePagedListBuilder;
-import androidx.paging.PagedList;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -15,14 +13,14 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
-import info.ericlin.moviedb.model.Movie;
-import info.ericlin.pupularmovies.paging.MoviePosterAdapter;
-import info.ericlin.pupularmovies.paging.MoviePosterDataSourceFactory;
-import info.ericlin.pupularmovies.paging.MoviePosterDataSourceFactoryFactory;
+import info.ericlin.pupularmovies.discovery.MovieCategory;
+import info.ericlin.pupularmovies.discovery.MoviePosterAdapter;
+import info.ericlin.pupularmovies.discovery.MoviePosterViewModel;
+import info.ericlin.pupularmovies.factory.ViewModelProviderFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-  @Inject MoviePosterDataSourceFactoryFactory moviePosterDataSourceFactoryFactory;
+  @Inject ViewModelProviderFactory viewModelProviderFactory;
 
   @BindView(R.id.main_recyclerview)
   RecyclerView recyclerView;
@@ -49,12 +47,9 @@ public class MainActivity extends AppCompatActivity {
     moviePosterAdapter = new MoviePosterAdapter();
     recyclerView.setAdapter(moviePosterAdapter);
 
-    // TODO: get proper view model setup...
-    final MoviePosterDataSourceFactory sourceFactory =
-        moviePosterDataSourceFactoryFactory.create(MoviePosterDataSourceFactory.Category.POPULAR);
-    // size does not matter since movie db does not support page size
-    final LiveData<PagedList<Movie>> liveData =
-        new LivePagedListBuilder<>(sourceFactory, 20).build();
-    liveData.observe(this, moviePosterAdapter::submitList);
+    final MoviePosterViewModel viewModel =
+        ViewModelProviders.of(this, viewModelProviderFactory).get(MoviePosterViewModel.class);
+    viewModel.init(MovieCategory.POPULAR);
+    viewModel.getMovieLists().observe(this, moviePosterAdapter::submitList);
   }
 }

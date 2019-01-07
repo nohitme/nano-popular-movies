@@ -1,4 +1,4 @@
-package info.ericlin.pupularmovies.paging;
+package info.ericlin.pupularmovies.discovery;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

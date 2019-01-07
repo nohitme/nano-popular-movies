@@ -1,4 +1,4 @@
-package info.ericlin.pupularmovies.paging;
+package info.ericlin.pupularmovies.discovery;
 
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
@@ -16,23 +16,10 @@ import io.reactivex.Single;
 @AutoFactory
 public class MoviePosterDataSourceFactory extends DataSource.Factory<Integer, Movie> {
 
-  /**
-   * Category for movies, see <a
-   * href="https://developers.themoviedb.org/3/movies">https://developers.themoviedb.org/3/movies</a>
-   * for details
-   */
-  public enum Category {
-    LATEST,
-    NOW_PLAYING,
-    POPULAR,
-    TOP_RATED,
-    UPCOMING
-  }
-
-  private final Category category;
+  private final MovieCategory category;
   private final MovieDbService movieDbService;
 
-  public MoviePosterDataSourceFactory(Category category, @Provided MovieDbService movieDbService) {
+  public MoviePosterDataSourceFactory(MovieCategory category, @Provided MovieDbService movieDbService) {
     this.category = category;
     this.movieDbService = movieDbService;
   }

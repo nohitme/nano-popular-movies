@@ -1,4 +1,4 @@
-package info.ericlin.pupularmovies.paging;
+package info.ericlin.pupularmovies.discovery;
 
 import android.view.View;
 import android.widget.ImageView;
