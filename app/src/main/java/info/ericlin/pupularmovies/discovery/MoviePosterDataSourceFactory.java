@@ -10,6 +10,7 @@ import com.google.auto.factory.Provided;
 import info.ericlin.moviedb.MovieDbService;
 import info.ericlin.moviedb.model.Movie;
 import info.ericlin.moviedb.model.MovieList;
+import info.ericlin.util.ExecutorProvider;
 import io.reactivex.Single;
 
 /** Data source factory for movie posters */
@@ -18,10 +19,15 @@ public class MoviePosterDataSourceFactory extends DataSource.Factory<Integer, Mo
 
   private final MovieCategory category;
   private final MovieDbService movieDbService;
+  private final ExecutorProvider executorProvider;
 
-  public MoviePosterDataSourceFactory(MovieCategory category, @Provided MovieDbService movieDbService) {
+  public MoviePosterDataSourceFactory(
+      MovieCategory category,
+      @Provided MovieDbService movieDbService,
+      @Provided ExecutorProvider executorProvider) {
     this.category = category;
     this.movieDbService = movieDbService;
+    this.executorProvider = executorProvider;
   }
 
   @NonNull
@@ -45,6 +51,6 @@ public class MoviePosterDataSourceFactory extends DataSource.Factory<Integer, Mo
         break;
     }
 
-    return new MoviePosterDataSource(movieFetcher);
+    return new MoviePosterDataSource(movieFetcher, executorProvider);
   }
 }

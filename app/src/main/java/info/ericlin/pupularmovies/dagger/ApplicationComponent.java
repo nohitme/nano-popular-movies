@@ -10,6 +10,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 import info.ericlin.moviedb.MovieDbModule;
 import info.ericlin.pupularmovies.MovieApplication;
+import info.ericlin.util.ResourceModule;
 
 @Singleton
 @Component(
@@ -20,6 +21,7 @@ import info.ericlin.pupularmovies.MovieApplication;
       OkHttpModule.class,
       MovieDbModule.class,
       ViewModelModule.class,
+      ResourceModule.class,
     })
 public interface ApplicationComponent extends AndroidInjector<MovieApplication> {
 

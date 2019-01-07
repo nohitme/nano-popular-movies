@@ -1,5 +1,7 @@
 package info.ericlin.moviedb;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 
 import javax.inject.Inject;
@@ -22,8 +24,9 @@ public class MovieDbApiKeyInterceptor implements Interceptor {
     this.configuration = configuration;
   }
 
+  @NotNull
   @Override
-  public Response intercept(Chain chain) throws IOException {
+  public Response intercept(@NotNull Chain chain) throws IOException {
 
     Request request = chain.request();
 

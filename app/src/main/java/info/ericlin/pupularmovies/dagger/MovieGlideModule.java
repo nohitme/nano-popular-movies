@@ -27,7 +27,6 @@ import okhttp3.OkHttpClient;
 public class MovieGlideModule extends AppGlideModule {
 
   @Inject OkHttpClient okHttpClient;
-
   @Inject MovieDbImagePathLoaderFactory movieDbImagePathLoaderFactory;
 
   @Override

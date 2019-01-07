@@ -1,5 +1,7 @@
 package info.ericlin.pupularmovies;
 
+import android.os.StrictMode;
+
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
 import info.ericlin.pupularmovies.dagger.ApplicationComponent;
@@ -17,6 +19,11 @@ public class MovieApplication extends DaggerApplication {
     super.onCreate();
     Timber.plant(new ThreadNameTree());
     Timber.d("timber trees planted, count: %s", Timber.treeCount());
+
+    StrictMode.setThreadPolicy(
+        new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().penaltyDeath().build());
+    StrictMode.setVmPolicy(
+        new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().penaltyDeath().build());
   }
 
   public ApplicationComponent getApplicationComponent() {

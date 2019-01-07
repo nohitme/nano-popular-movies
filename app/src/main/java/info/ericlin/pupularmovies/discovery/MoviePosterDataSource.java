@@ -8,20 +8,24 @@ import androidx.paging.PageKeyedDataSource;
 
 import info.ericlin.moviedb.model.Movie;
 import info.ericlin.moviedb.model.MovieList;
+import info.ericlin.util.ExecutorProvider;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
-import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /** Data source for movie posters. */
 public class MoviePosterDataSource extends PageKeyedDataSource<Integer, Movie> {
 
   private final CompositeDisposable disposables = new CompositeDisposable();
-  @NonNull private final Function<Integer, Single<MovieList>> movieFetcher;
+  private final Function<Integer, Single<MovieList>> movieFetcher;
+  private final ExecutorProvider executorProvider;
 
-  public MoviePosterDataSource(@NonNull Function<Integer, Single<MovieList>> movieFetcher) {
+  public MoviePosterDataSource(
+      @NonNull Function<Integer, Single<MovieList>> movieFetcher,
+      @NonNull ExecutorProvider executorProvider) {
     this.movieFetcher = movieFetcher;
+    this.executorProvider = executorProvider;
   }
 
   @Override
@@ -59,7 +63,7 @@ public class MoviePosterDataSource extends PageKeyedDataSource<Integer, Movie> {
     final DisposableSingleObserver<MovieList> disposable =
         movieFetcher
             .apply(page)
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(executorProvider.ioScheduler())
             .subscribeWith(
                 new DisposableSingleObserver<MovieList>() {
                   @Override

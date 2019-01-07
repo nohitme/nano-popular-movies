@@ -22,8 +22,10 @@ def getMovieDbApiKey() {
 }
 
 dependencies {
-    api deps_retrofit
-    api deps_rxjava
+    implementation project(":util")
+
+    implementation deps_retrofit
+    implementation deps_rxjava
 
     implementation deps_retrofit_rxjava
     implementation deps_retrofit_moshi

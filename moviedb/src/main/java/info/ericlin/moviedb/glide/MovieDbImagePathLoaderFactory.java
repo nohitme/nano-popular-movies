@@ -10,9 +10,11 @@ import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 import java.io.InputStream;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import info.ericlin.moviedb.MovieDbService;
 
+@Singleton
 public class MovieDbImagePathLoaderFactory
     implements ModelLoaderFactory<MovieDbImagePath, InputStream> {
 

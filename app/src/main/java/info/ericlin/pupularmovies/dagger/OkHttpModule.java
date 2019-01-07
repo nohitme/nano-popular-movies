@@ -1,17 +1,18 @@
 package info.ericlin.pupularmovies.dagger;
 
-import android.content.Context;
 import android.net.TrafficStats;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import javax.inject.Singleton;
 import javax.net.SocketFactory;
 
 import dagger.Module;
 import dagger.Provides;
 import info.ericlin.moviedb.MovieDbApiKeyInterceptor;
+import info.ericlin.util.CacheDirSupplier;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -21,12 +22,14 @@ import timber.log.Timber;
 class OkHttpModule {
 
   @Provides
-  OkHttpClient okHttpClient(Context context, MovieDbApiKeyInterceptor movieDbApiKeyInterceptor) {
+  @Singleton
+  OkHttpClient okHttpClient(
+      MovieDbApiKeyInterceptor movieDbApiKeyInterceptor, CacheDirSupplier cacheDirSupplier) {
 
     OkHttpClient.Builder builder = new OkHttpClient.Builder();
     // cache
     int cacheSize = 64 * 1024 * 1024; // 64 MiB
-    Cache cache = new Cache(context.getCacheDir(), cacheSize);
+    Cache cache = new Cache(cacheDirSupplier.get(), cacheSize);
     builder.cache(cache);
 
     // just to get rid of strict mode warning
