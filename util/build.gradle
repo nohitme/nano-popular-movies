@@ -27,6 +27,7 @@ dependencies {
     implementation deps_dagger
     implementation deps_timber
     implementation 'com.netflix.concurrency-limits:concurrency-limits-core:0.1.9'
+    implementation 'org.slf4j:slf4j-android:1.7.25' // make concurrency happy
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'

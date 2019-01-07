@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.google.common.base.Supplier;
 
 import io.reactivex.Single;
+import timber.log.Timber;
 
 /** A specialized {@link Supplier} that does lazy initialization always at background thread */
 public abstract class BackgroundSupplier<T> implements Supplier<T> {
@@ -17,10 +18,15 @@ public abstract class BackgroundSupplier<T> implements Supplier<T> {
 
   @Override
   public final T get() {
-    return Single.fromCallable(this::getActual)
-        .subscribeOn(executorProvider.ioScheduler())
-        .retry()
-        .blockingGet();
+    try {
+      return Single.fromCallable(this::getActual)
+          .subscribeOn(executorProvider.ioScheduler())
+          .retry()
+          .blockingGet();
+    } catch (Exception e) {
+      Timber.w(e, "failed to get actual value");
+      return getActual();
+    }
   }
 
   @NonNull
