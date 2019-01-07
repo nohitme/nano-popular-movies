@@ -17,6 +17,7 @@ import java.util.List;
 
 import info.ericlin.moviedb.MovieDbService;
 import info.ericlin.moviedb.model.Configuration;
+import okhttp3.HttpUrl;
 import timber.log.Timber;
 
 /**
@@ -35,12 +36,13 @@ public class MovieDbImagePathLoader extends BaseGlideUrlLoader<MovieDbImagePath>
   private static final String IMAGE_WIDTH_PREFIX = "w";
   // an arbitrary number since loading anything below is kind of wasteful
   private static final int MINIMAL_IMAGE_WIDTH = 200;
+  private static final int FALLBACK_IMAGE_WIDTH = 600;
   private final MovieDbService movieDbService;
 
   @Nullable private Configuration configuration;
   @Nullable private EnumMap<MovieDbImagePath.Type, List<Integer>> typeSizes;
 
-  protected MovieDbImagePathLoader(
+  MovieDbImagePathLoader(
       ModelLoader<GlideUrl, InputStream> concreteLoader, MovieDbService movieDbService) {
     super(concreteLoader);
     this.movieDbService = movieDbService;
@@ -56,12 +58,12 @@ public class MovieDbImagePathLoader extends BaseGlideUrlLoader<MovieDbImagePath>
       MovieDbImagePath movieDbImagePath, int width, int height, Options options) {
     final String path = movieDbImagePath.path();
     if (path == null) {
-      return null;
+      return getFallbackImageUrl(movieDbImagePath.type(), width);
     }
 
     ensureConfiguration();
     if (configuration == null) {
-      return null;
+      return getFallbackImageUrl(movieDbImagePath.type(), width);
     }
 
     // just use original if we cannot get any sizes
@@ -129,5 +131,21 @@ public class MovieDbImagePathLoader extends BaseGlideUrlLoader<MovieDbImagePath>
     }
 
     return size != null ? IMAGE_WIDTH_PREFIX + size : SIZE_ORIGINAL;
+  }
+
+  /**
+   * Returns a fallback image given the image type and width. The image is generated from <a
+   * href="https://placeholder.com/">https://placeholder.com/</a>
+   */
+  @NonNull
+  private String getFallbackImageUrl(MovieDbImagePath.Type type, int width) {
+    int targetWidth = width == Target.SIZE_ORIGINAL ? FALLBACK_IMAGE_WIDTH : width;
+    final int targetHeight = (int) (targetWidth * type.getRatio());
+    return HttpUrl.parse("https://via.placeholder.com")
+        .newBuilder()
+        .addPathSegment(String.format("%sx%s.png", targetWidth, targetHeight))
+        .addQueryParameter("text", String.format("%s image is not available", type))
+        .build()
+        .toString();
   }
 }

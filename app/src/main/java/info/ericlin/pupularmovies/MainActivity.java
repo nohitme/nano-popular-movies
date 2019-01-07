@@ -4,31 +4,23 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
-import javax.inject.Inject;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import info.ericlin.pupularmovies.discovery.MovieCategory;
-import info.ericlin.pupularmovies.discovery.MoviePosterAdapter;
-import info.ericlin.pupularmovies.discovery.MoviePosterViewModel;
-import info.ericlin.pupularmovies.factory.ViewModelProviderFactory;
+import info.ericlin.pupularmovies.discovery.MoviePosterFragment;
 
 public class MainActivity extends AppCompatActivity {
-
-  @Inject ViewModelProviderFactory viewModelProviderFactory;
-
-  @BindView(R.id.main_recyclerview)
-  RecyclerView recyclerView;
 
   @BindView(R.id.toolbar)
   Toolbar toolbar;
 
-  private MoviePosterAdapter moviePosterAdapter;
+  @BindView(R.id.main_viewpager)
+  ViewPager viewPager;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -36,20 +28,27 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
-
-    toolbar.setTitle("Movies!");
-
-    final int spanCount = getResources().getInteger(R.integer.movie_poster_grid_span);
-    final StaggeredGridLayoutManager layoutManager =
-        new StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL);
-
-    recyclerView.setLayoutManager(layoutManager);
-    moviePosterAdapter = new MoviePosterAdapter();
-    recyclerView.setAdapter(moviePosterAdapter);
-
-    final MoviePosterViewModel viewModel =
-        ViewModelProviders.of(this, viewModelProviderFactory).get(MoviePosterViewModel.class);
-    viewModel.init(MovieCategory.POPULAR);
-    viewModel.getMovieLists().observe(this, moviePosterAdapter::submitList);
+    toolbar.setTitle(R.string.app_name);
+    viewPager.setAdapter(pagerAdapter);
   }
+
+  private final FragmentStatePagerAdapter pagerAdapter =
+      new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+        @Override
+        public Fragment getItem(int position) {
+          final MovieCategory category = MovieCategory.values()[position];
+          return MoviePosterFragment.newInstance(category);
+        }
+
+        @Override
+        public int getCount() {
+          return MovieCategory.values().length;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+          final int stringRes = MovieCategory.values()[position].getStringRes();
+          return getString(stringRes);
+        }
+      };
 }

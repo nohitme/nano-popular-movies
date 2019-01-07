@@ -30,9 +30,6 @@ public class MoviePosterDataSourceFactory extends DataSource.Factory<Integer, Mo
 
     final Function<Integer, Single<MovieList>> movieFetcher;
     switch (category) {
-      case LATEST:
-        movieFetcher = movieDbService::getLatestMovies;
-        break;
       case NOW_PLAYING:
         movieFetcher = movieDbService::getNowPlayingMovies;
         break;

@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Pupular Movies</string>
+    <string name="app_name">Movies!</string>
+    
+    <string name="tab_latest">Latest</string>
+    <string name="tab_now_playing">Now Playing</string>
+    <string name="tab_popular">Popular</string>
+    <string name="tab_top_rated">Top Rated</string>
+    <string name="tab_upcoming">Upcoming</string>
 </resources>

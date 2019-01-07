@@ -10,8 +10,18 @@ import com.google.auto.value.AutoValue;
 public abstract class MovieDbImagePath {
 
   public enum Type {
-    POSTER,
-    BACKDROP
+    POSTER(3.0d / 2),
+    BACKDROP(9.0d / 16);
+
+    private final double ratio;
+
+    Type(double ratio) {
+      this.ratio = ratio;
+    }
+
+    public double getRatio() {
+      return ratio;
+    }
   }
 
   @NonNull
