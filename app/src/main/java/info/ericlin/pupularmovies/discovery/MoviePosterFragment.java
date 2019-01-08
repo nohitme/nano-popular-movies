@@ -1,6 +1,7 @@
 package info.ericlin.pupularmovies.discovery;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dagger.android.support.AndroidSupportInjection;
+import info.ericlin.moviedb.model.Movie;
+import info.ericlin.pupularmovies.DetailActivity;
 import info.ericlin.pupularmovies.R;
 import info.ericlin.pupularmovies.factory.ViewModelProviderFactory;
 
@@ -77,13 +80,18 @@ public class MoviePosterFragment extends Fragment {
         new StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL);
 
     recyclerView.setLayoutManager(layoutManager);
-    MoviePosterAdapter moviePosterAdapter = new MoviePosterAdapter();
+    MoviePosterAdapter moviePosterAdapter = new MoviePosterAdapter(this::onMovieClicked);
     recyclerView.setAdapter(moviePosterAdapter);
 
     final MoviePosterViewModel viewModel =
         ViewModelProviders.of(this, viewModelProviderFactory).get(MoviePosterViewModel.class);
     viewModel.init(category);
     viewModel.getMovieLists().observe(this, moviePosterAdapter::submitList);
+  }
+
+  private void onMovieClicked(@NonNull Movie movie) {
+    final Intent intent = DetailActivity.newIntent(requireContext(), movie.id());
+    startActivity(intent);
   }
 
   @Override

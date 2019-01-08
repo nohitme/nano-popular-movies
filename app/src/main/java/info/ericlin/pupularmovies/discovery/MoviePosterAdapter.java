@@ -10,10 +10,9 @@ import androidx.recyclerview.widget.DiffUtil;
 
 import com.google.common.base.Objects;
 
-import info.ericlin.moviedb.glide.MovieDbImagePath;
 import info.ericlin.moviedb.model.Movie;
+import info.ericlin.pupularmovies.OnItemClickListener;
 import info.ericlin.pupularmovies.R;
-import info.ericlin.pupularmovies.dagger.GlideApp;
 
 public class MoviePosterAdapter extends PagedListAdapter<Movie, MoviePosterViewHolder> {
 
@@ -29,9 +28,11 @@ public class MoviePosterAdapter extends PagedListAdapter<Movie, MoviePosterViewH
           return Objects.equal(oldItem, newItem);
         }
       };
+  @NonNull private final OnItemClickListener<Movie> onItemClickListener;
 
-  public MoviePosterAdapter() {
+  MoviePosterAdapter(@NonNull OnItemClickListener<Movie> onItemClickListener) {
     super(DIFF_CALLBACK);
+    this.onItemClickListener = onItemClickListener;
   }
 
   @NonNull
@@ -44,28 +45,7 @@ public class MoviePosterAdapter extends PagedListAdapter<Movie, MoviePosterViewH
 
   @Override
   public void onBindViewHolder(@NonNull MoviePosterViewHolder holder, int position) {
-    // always clear previous image loading
-    GlideApp.with(holder.posterImage).clear(holder.posterImage);
-
     final Movie movie = getItem(position);
-    if (movie == null) {
-      // TODO: fine.. let's do a "bind" method...
-      holder.posterName.setText(null);
-      return;
-    }
-
-    final String name;
-    if (Objects.equal(movie.title(), movie.original_title())) {
-      name = movie.title();
-    } else {
-      name = String.format("%s (%s)", movie.original_title(), movie.title());
-    }
-
-    holder.posterName.setText(name);
-
-    GlideApp.with(holder.posterImage)
-        .load(MovieDbImagePath.poster(movie.poster_path()))
-        .placeholder(R.drawable.placeholder_600x900)
-        .into(holder.posterImage);
+    holder.bindTo(movie, onItemClickListener);
   }
 }
