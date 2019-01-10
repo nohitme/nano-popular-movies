@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">Movies!</string>
-    
+
     <string name="tab_latest">Latest</string>
     <string name="tab_now_playing">Now Playing</string>
     <string name="tab_popular">Popular</string>
     <string name="tab_top_rated">Top Rated</string>
     <string name="tab_upcoming">Upcoming</string>
+
+    <string name="details_release_date">Release on %s</string>
+    <string name="details_vote">Average %.1f out of %d votes</string>
+
 </resources>

@@ -12,6 +12,9 @@ public abstract class Movie {
   @Nullable
   public abstract String poster_path();
 
+  @Nullable
+  public abstract String backdrop_path();
+
   public abstract String overview();
 
   public abstract String release_date();
@@ -23,6 +26,10 @@ public abstract class Movie {
   public abstract String original_language();
 
   public abstract String title();
+
+  public abstract double vote_average();
+
+  public abstract int vote_count();
 
   public abstract double popularity();
 

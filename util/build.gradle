@@ -21,11 +21,13 @@ android {
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.palette:palette:1.0.0'
 
     implementation deps_rxjava
     implementation deps_guava
     implementation deps_dagger
     implementation deps_timber
+    implementation deps_glide
     implementation 'com.netflix.concurrency-limits:concurrency-limits-core:0.1.9'
     implementation 'org.slf4j:slf4j-android:1.7.25' // make concurrency happy
 

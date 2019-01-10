@@ -3,9 +3,11 @@ package info.ericlin.moviedb;
 import androidx.annotation.Nullable;
 
 import info.ericlin.moviedb.model.Configuration;
+import info.ericlin.moviedb.model.Movie;
 import info.ericlin.moviedb.model.MovieList;
 import io.reactivex.Single;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface MovieDbService {
@@ -24,4 +26,7 @@ public interface MovieDbService {
 
   @GET("/3/movie/upcoming")
   Single<MovieList> getUpcomingMovies(@Query("page") @Nullable Integer page);
+
+  @GET("/3/movie/{movieId}")
+  Single<Movie> getMovie(@Path("movieId") int movieId);
 }
