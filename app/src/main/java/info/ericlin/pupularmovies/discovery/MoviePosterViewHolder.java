@@ -31,7 +31,9 @@ public class MoviePosterViewHolder extends RecyclerView.ViewHolder {
     ButterKnife.bind(this, itemView);
   }
 
-  void bindTo(@Nullable Movie movie, OnItemClickListener<Movie> onItemClickListener) {
+  void bindTo(
+      @Nullable Movie movie,
+      OnItemClickListener<Movie, MoviePosterViewHolder> onItemClickListener) {
     // always clear previous image loading
     GlideApp.with(posterImage).clear(posterImage);
 
@@ -41,7 +43,7 @@ public class MoviePosterViewHolder extends RecyclerView.ViewHolder {
       return;
     }
 
-    itemView.setOnClickListener(v -> onItemClickListener.onItemClick(movie));
+    itemView.setOnClickListener(v -> onItemClickListener.onItemClick(movie, this));
 
     final String name;
     if (Objects.equal(movie.title(), movie.original_title())) {

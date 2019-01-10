@@ -28,9 +28,10 @@ public class MoviePosterAdapter extends PagedListAdapter<Movie, MoviePosterViewH
           return Objects.equal(oldItem, newItem);
         }
       };
-  @NonNull private final OnItemClickListener<Movie> onItemClickListener;
+  @NonNull private final OnItemClickListener<Movie, MoviePosterViewHolder> onItemClickListener;
 
-  MoviePosterAdapter(@NonNull OnItemClickListener<Movie> onItemClickListener) {
+  MoviePosterAdapter(
+      @NonNull OnItemClickListener<Movie, MoviePosterViewHolder> onItemClickListener) {
     super(DIFF_CALLBACK);
     this.onItemClickListener = onItemClickListener;
   }

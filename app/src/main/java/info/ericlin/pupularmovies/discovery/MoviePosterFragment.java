@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
@@ -89,9 +91,17 @@ public class MoviePosterFragment extends Fragment {
     viewModel.getMovieLists().observe(this, moviePosterAdapter::submitList);
   }
 
-  private void onMovieClicked(@NonNull Movie movie) {
+  private void onMovieClicked(@NonNull Movie movie, @NonNull MoviePosterViewHolder viewHolder) {
     final Intent intent = DetailActivity.newIntent(requireContext(), movie.id());
-    startActivity(intent);
+
+    final Pair<View, String> image =
+        Pair.create(viewHolder.posterImage, getString(R.string.transition_poster_image));
+    final Pair<View, String> title =
+        Pair.create(viewHolder.posterName, getString(R.string.transition_movie_title));
+
+    final ActivityOptionsCompat options =
+        ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), image, title);
+    startActivity(intent, options.toBundle());
   }
 
   @Override

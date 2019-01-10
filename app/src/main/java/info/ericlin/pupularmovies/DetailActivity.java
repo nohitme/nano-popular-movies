@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NavUtils;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.palette.graphics.Palette;
 
@@ -140,7 +139,7 @@ public class DetailActivity extends AppCompatActivity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == android.R.id.home) {
-      NavUtils.navigateUpFromSameTask(this);
+      onBackPressed();
       return true;
     }
 
