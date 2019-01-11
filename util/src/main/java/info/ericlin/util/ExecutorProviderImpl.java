@@ -25,11 +25,22 @@ public class ExecutorProviderImpl implements ExecutorProvider {
 
   @Inject
   ExecutorProviderImpl() {
-    final ThreadFactory threadFactory =
-        new ThreadFactoryBuilder().setNameFormat("adaptive-limiter-%d").build();
-    final ExecutorService executorService = Executors.newCachedThreadPool(threadFactory);
-    ioExecutor = new BlockingAdaptiveExecutor(SimpleLimiter.newBuilder().build(), executorService);
+    ioExecutor = newIoExecutor();
     ioScheduler = Schedulers.from(ioExecutor);
+  }
+
+  private Executor newIoExecutor() {
+    if (BuildConfig.VERSION_CODE >= 24) {
+      final ThreadFactory threadFactory =
+          new ThreadFactoryBuilder().setNameFormat("adaptive-limiter-%d").build();
+      final ExecutorService executorService = Executors.newCachedThreadPool(threadFactory);
+      // internally Log10RootFunction uses java8 function.andThen(), which requires API 24..
+      return new BlockingAdaptiveExecutor(SimpleLimiter.newBuilder().build(), executorService);
+    } else {
+      final ThreadFactory threadFactory =
+          new ThreadFactoryBuilder().setNameFormat("fixed-io-%d").build();
+      return Executors.newCachedThreadPool(threadFactory);
+    }
   }
 
   @NonNull
