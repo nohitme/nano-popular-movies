@@ -36,10 +36,11 @@ dependencies {
     implementation "androidx.paging:paging-runtime:$paging_version"
     implementation "androidx.paging:paging-rxjava2:$paging_version"
 
+    implementation deps_rxjava
     implementation deps_rxandroid
     implementation deps_okttp_logging
 
-    implementation deps_guava
+    api deps_guava
     implementation deps_dagger
     implementation deps_dagger_android
     implementation deps_dagger_android_support

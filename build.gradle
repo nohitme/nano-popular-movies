@@ -7,7 +7,7 @@ buildscript {
         
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0-alpha10'
+        classpath 'com.android.tools.build:gradle:3.2.1'
     }
 }
 
@@ -39,7 +39,7 @@ ext {
     deps_auto_moshi = "com.ryanharter.auto.value:auto-value-moshi:$version_auto_moshi"
     deps_auto_moshi_annotation = "com.ryanharter.auto.value:auto-value-moshi-annotations:$version_auto_moshi"
 
-    version_dagger = "2.20"
+    version_dagger = "2.19"
     deps_dagger = "com.google.dagger:dagger:$version_dagger"
     deps_dagger_compiler = "com.google.dagger:dagger-compiler:$version_dagger"
     deps_dagger_android = "com.google.dagger:dagger-android:$version_dagger"
