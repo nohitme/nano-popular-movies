@@ -10,7 +10,4 @@
     <string name="details_release_date">Release on %1$s</string>
     <string name="details_vote">Average %1$.1f out of %2$d votes</string>
 
-    <string name="transition_poster_image">poster_image</string>
-    <string name="transition_movie_title">movie_title</string>
-
 </resources>

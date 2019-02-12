@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.google.common.base.Preconditions;
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -29,13 +30,16 @@ import info.ericlin.pupularmovies.factory.ViewModelProviderFactory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-/** Displays a list of movie based on {@link MovieCategory} */
+/**
+ * Displays a list of movie based on {@link MovieCategory}
+ */
 public class MoviePosterFragment extends Fragment {
 
   private static final String ARGS_CATEGORY = "ARGS_CATEGORY";
   private MovieCategory category;
 
-  @Inject ViewModelProviderFactory viewModelProviderFactory;
+  @Inject
+  ViewModelProviderFactory viewModelProviderFactory;
 
   @BindView(R.id.main_recyclerview)
   RecyclerView recyclerView;
@@ -59,6 +63,7 @@ public class MoviePosterFragment extends Fragment {
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    checkNotNull(getArguments());
     this.category = (MovieCategory) getArguments().getSerializable(ARGS_CATEGORY);
     checkNotNull(this.category);
   }
@@ -93,15 +98,7 @@ public class MoviePosterFragment extends Fragment {
 
   private void onMovieClicked(@NonNull Movie movie, @NonNull MoviePosterViewHolder viewHolder) {
     final Intent intent = DetailActivity.newIntent(requireContext(), movie.id());
-
-    final Pair<View, String> image =
-        Pair.create(viewHolder.posterImage, getString(R.string.transition_poster_image));
-    final Pair<View, String> title =
-        Pair.create(viewHolder.posterName, getString(R.string.transition_movie_title));
-
-    final ActivityOptionsCompat options =
-        ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), image, title);
-    startActivity(intent, options.toBundle());
+    startActivity(intent);
   }
 
   @Override
