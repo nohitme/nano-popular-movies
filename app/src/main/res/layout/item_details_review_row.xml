@@ -11,32 +11,24 @@
     >
 
   <TextView
-      android:id="@+id/details_release_date"
+      android:id="@+id/details_review_author"
       android:layout_width="match_parent"
       android:layout_height="56dp"
-      android:drawableStart="@drawable/calendar"
+      android:drawableStart="@drawable/comment_account_outline"
       app:layout_constraintTop_toTopOf="parent"
-      tools:text="Release on 2018-12-07"
+      tools:text="Gimly says: "
       style="@style/DetailsContentItem"
       />
 
   <TextView
-      android:id="@+id/details_votes"
-      android:layout_width="match_parent"
-      android:layout_height="56dp"
-      android:drawableStart="@drawable/thumb_up"
-      app:layout_constraintTop_toBottomOf="@id/details_release_date"
-      tools:text="Vote Average 7.3 out of 200 votes"
-      style="@style/DetailsContentItem"
-      />
-
-  <TextView
-      android:id="@+id/details_overview"
+      android:id="@+id/details_review_comment"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_marginBottom="16dp"
       android:textAppearance="?attr/textAppearanceBody2"
-      app:layout_constraintTop_toBottomOf="@id/details_votes"
-      tools:text="Arthur Curry learns that he is the heir to the underwater kingdom of Atlantis"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/details_review_author"
+      tools:text="@tools:sample/lorem/random"
       style="@style/DetailsContentItem"
       />
 

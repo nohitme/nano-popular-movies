@@ -1,13 +1,17 @@
 <resources>
-    <string name="app_name">Movies!</string>
+  <string name="app_name">Movies!</string>
 
-    <string name="tab_latest">Latest</string>
-    <string name="tab_now_playing">Now Playing</string>
-    <string name="tab_popular">Popular</string>
-    <string name="tab_top_rated">Top Rated</string>
-    <string name="tab_upcoming">Upcoming</string>
+  <string name="tab_latest">Latest</string>
+  <string name="tab_now_playing">Now Playing</string>
+  <string name="tab_popular">Popular</string>
+  <string name="tab_top_rated">Top Rated</string>
+  <string name="tab_upcoming">Upcoming</string>
 
-    <string name="details_release_date">Release on %1$s</string>
-    <string name="details_vote">Average %1$.1f out of %2$d votes</string>
+  <string name="details_release_date">Release on %1$s</string>
+  <string name="details_vote">Average %1$.1f out of %2$d votes</string>
+  <string name="details_launch_by_web">Launch video by web intent</string>
+  <string name="details_header_videos">Videos (%1$d)</string>
+  <string name="details_header_reviews">Reviews (%1$d)</string>
+  <string name="details_review_author">%1$s says:</string>
 
 </resources>

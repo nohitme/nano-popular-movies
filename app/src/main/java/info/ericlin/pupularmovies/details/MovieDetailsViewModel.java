@@ -13,27 +13,38 @@ import com.bumptech.glide.request.FutureTarget;
 import com.google.auto.factory.AutoFactory;
 import com.google.auto.factory.Provided;
 import com.google.common.base.Objects;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import info.ericlin.moviedb.Identifiable;
 import info.ericlin.moviedb.MovieDbService;
 import info.ericlin.moviedb.glide.MovieDbImagePath;
+import info.ericlin.moviedb.model.MovieReview;
+import info.ericlin.moviedb.model.MovieVideo;
 import info.ericlin.moviedb.model.MovieWithDetails;
+import info.ericlin.pupularmovies.R;
 import info.ericlin.pupularmovies.dagger.GlideApp;
 import info.ericlin.pupularmovies.factory.ViewModelFactory;
 import info.ericlin.util.ExecutorProvider;
 import io.reactivex.Single;
+import java.util.ArrayList;
 import java.util.List;
 
 /** View model for {@link info.ericlin.pupularmovies.DetailActivity} */
 @AutoFactory(implementing = ViewModelFactory.class)
 public class MovieDetailsViewModel extends AndroidViewModel {
 
+  public static final String SITE_YOUTUBE = "YouTube";
   @NonNull private final MovieDbService movieDbService;
   @NonNull private final ExecutorProvider executorProvider;
 
   private final MutableLiveData<Integer> movieIdLiveData = new MutableLiveData<>();
   private final LiveData<List<Identifiable>> detailsListLiveData =
       Transformations.switchMap(movieIdLiveData, this::getDetailsListItem);
+
+  // we only want youtube videos
+  private Predicate<MovieVideo> youTubeFilter =
+      video -> video != null && SITE_YOUTUBE.equalsIgnoreCase(video.site());
 
   MovieDetailsViewModel(
       @NonNull Application application,
@@ -78,6 +89,24 @@ public class MovieDetailsViewModel extends AndroidViewModel {
   }
 
   private List<Identifiable> convertToRecyclerViewItems(MovieSwatch movieSwatch) {
-    return Lists.newArrayList(movieSwatch, movieSwatch.movie());
+    ArrayList<Identifiable> items = Lists.newArrayList(movieSwatch, movieSwatch.movie());
+
+    List<MovieVideo> videos = FluentIterable.from(movieSwatch.movie().videos().results())
+        .filter(youTubeFilter).toList();
+    if (!videos.isEmpty()) {
+      String headerText = getApplication().getString(R.string.details_header_videos, videos.size());
+      items.add(HeaderString.create(headerText));
+      items.addAll(videos);
+    }
+
+    List<MovieReview> reviews = movieSwatch.movie().reviews().results();
+    if (!reviews.isEmpty()) {
+      int count = reviews.size();
+      String headerText = getApplication().getString(R.string.details_header_reviews, count);
+      items.add(HeaderString.create(headerText));
+      items.addAll(reviews);
+    }
+
+    return items;
   }
 }

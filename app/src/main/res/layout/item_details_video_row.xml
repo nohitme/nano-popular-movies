@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:paddingBottom="8dp"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp"
+    android:paddingTop="8dp"
+    tools:background="@color/white"
+    >
+
+  <TextView
+      android:id="@+id/details_video_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical"
+      android:drawableStart="@drawable/play_circle_outline"
+      android:ellipsize="end"
+      android:maxLines="2"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+      tools:text="Spider-Man: Into The Spider-Verse - All TV Spot (2018)"
+      style="@style/DetailsContentItem"
+      />
+
+</FrameLayout>

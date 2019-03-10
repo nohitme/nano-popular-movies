@@ -1,11 +1,19 @@
 package info.ericlin.moviedb.model;
 
+import androidx.annotation.NonNull;
 import com.google.auto.value.AutoValue;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
+import info.ericlin.moviedb.Identifiable;
 
 @AutoValue
-public abstract class MovieVideo {
+public abstract class MovieVideo implements Identifiable {
+
+  @NonNull @Override public String identifier() {
+    return id();
+  }
+
+  public abstract String id();
 
   public abstract String key();
 
