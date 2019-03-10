@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    >
+
+  <TextView
+      android:id="@+id/details_release_date"
+      android:layout_width="match_parent"
+      android:layout_height="56dp"
+      android:layout_marginTop="8dp"
+      android:drawableStart="@drawable/calendar"
+      android:gravity="center_vertical"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:text="Release on 2018-12-07"
+      style="@style/DetailsContentItem"
+      />
+
+  <TextView
+      android:id="@+id/details_votes"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:drawableStart="@drawable/thumb_up"
+      app:layout_constraintTop_toBottomOf="@id/details_release_date"
+      tools:text="Vote Average 7.3 out of 200 votes"
+      style="@style/DetailsContentItem"
+      />
+
+  <TextView
+      android:id="@+id/details_overview"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textAppearance="?attr/textAppearanceBody2"
+      app:layout_constraintTop_toBottomOf="@id/details_votes"
+      tools:text="Arthur Curry learns that he is the heir to the underwater kingdom of Atlantis"
+      style="@style/DetailsContentItem"
+      />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

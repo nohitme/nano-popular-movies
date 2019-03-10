@@ -3,7 +3,6 @@ package info.ericlin.moviedb.model;
 import com.google.auto.value.AutoValue;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
-import io.reactivex.annotations.Nullable;
 
 /**
  * This is the same model object as {@link Movie} but with additional {@link ReviewList} and {@link

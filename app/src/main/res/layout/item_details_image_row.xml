@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+  <ImageView
+      android:id="@+id/details_backdrop_image"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:contentDescription="@null"
+      android:scaleType="centerCrop"
+      android:src="@color/colorPrimary"
+      app:layout_constraintDimensionRatio="16:9"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:src="@tools:sample/backgrounds/scenic"
+      />
+
+  <View
+      android:id="@+id/details_header_frame"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:background="?attr/colorPrimaryDark"
+      app:layout_constrainedHeight="true"
+      app:layout_constraintBottom_toBottomOf="@id/details_frame_bottom_space"
+      app:layout_constraintTop_toBottomOf="@id/details_backdrop_image"
+      />
+
+  <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/details_left_guideline"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layout_constraintGuide_percent="0.08"
+      />
+
+  <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/details_right_guideline"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layout_constraintGuide_percent="0.92"
+      />
+
+  <ImageView
+      android:id="@+id/details_poster_image"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:adjustViewBounds="true"
+      android:background="@color/white"
+      android:padding="2dp"
+      android:scaleType="fitXY"
+      android:src="@drawable/placeholder_600x900"
+      app:layout_constrainedWidth="true"
+      app:layout_constraintBottom_toBottomOf="@id/details_backdrop_image"
+      app:layout_constraintDimensionRatio="H, 2:3"
+      app:layout_constraintEnd_toEndOf="@id/details_right_guideline"
+      app:layout_constraintHorizontal_bias="0"
+      app:layout_constraintStart_toStartOf="@id/details_left_guideline"
+      app:layout_constraintTop_toBottomOf="@id/details_backdrop_image"
+      app:layout_constraintWidth_percent="0.2"
+      />
+
+  <Space
+      android:id="@+id/details_frame_bottom_space"
+      android:layout_width="match_parent"
+      android:layout_height="8dp"
+      android:orientation="horizontal"
+      app:layout_constraintTop_toBottomOf="@id/details_poster_image"
+      />
+
+  <TextView
+      android:id="@+id/details_title"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="8dp"
+      android:layout_marginStart="8dp"
+      android:ellipsize="end"
+      android:gravity="center_vertical"
+      android:maxLines="2"
+      android:textAppearance="?attr/textAppearanceHeadline6"
+      app:layout_constrainedWidth="true"
+      app:layout_constraintBottom_toBottomOf="@id/details_header_frame"
+      app:layout_constraintEnd_toEndOf="@id/details_right_guideline"
+      app:layout_constraintStart_toEndOf="@id/details_poster_image"
+      app:layout_constraintTop_toBottomOf="@id/details_backdrop_image"
+      tools:text="Aquaman"
+      />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

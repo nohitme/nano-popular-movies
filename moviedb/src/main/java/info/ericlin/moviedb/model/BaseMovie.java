@@ -1,12 +1,18 @@
 package info.ericlin.moviedb.model;
 
+import androidx.annotation.NonNull;
+import info.ericlin.moviedb.Identifiable;
 import io.reactivex.annotations.Nullable;
 
 /**
  * The shared model between the {@link Movie} and {@link MovieWithDetails}. This model ensures two
  * models has the identical fields.
  */
-public abstract class BaseMovie {
+public abstract class BaseMovie implements Identifiable {
+
+  @NonNull @Override public String identifier() {
+    return String.valueOf(id());
+  }
 
   @Nullable
   public abstract String poster_path();
