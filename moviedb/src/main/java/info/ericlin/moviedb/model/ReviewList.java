@@ -6,7 +6,7 @@ import com.squareup.moshi.Moshi;
 import java.util.List;
 
 @AutoValue
-public abstract class ReviewList {
+public abstract class ReviewList extends PagedResult {
 
   public abstract List<MovieReview> results();
 
