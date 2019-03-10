@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import info.ericlin.moviedb.model.Configuration;
 import info.ericlin.moviedb.model.Movie;
 import info.ericlin.moviedb.model.MovieList;
+import info.ericlin.moviedb.model.MovieWithDetails;
 import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -27,6 +28,6 @@ public interface MovieDbService {
   @GET("/3/movie/upcoming")
   Single<MovieList> getUpcomingMovies(@Query("page") @Nullable Integer page);
 
-  @GET("/3/movie/{movieId}")
-  Single<Movie> getMovie(@Path("movieId") int movieId);
+  @GET("/3/movie/{movieId}?append_to_response=videos,reviews")
+  Single<MovieWithDetails> getMovieWithDetails(@Path("movieId") int movieId);
 }

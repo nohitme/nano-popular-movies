@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.palette.graphics.Palette;
 
+import info.ericlin.moviedb.model.MovieWithDetails;
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -102,7 +103,7 @@ public class DetailActivity extends AppCompatActivity {
     disposables.clear();
   }
 
-  private void onMovieUpdated(Movie movie) {
+  private void onMovieUpdated(MovieWithDetails movie) {
     titleText.setText(movie.title());
     releaseDateText.setText(getString(R.string.details_release_date, movie.release_date()));
     voteText.setText(getString(R.string.details_vote, movie.vote_average(), movie.vote_count()));

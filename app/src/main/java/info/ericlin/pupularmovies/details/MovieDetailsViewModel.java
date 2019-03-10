@@ -19,6 +19,7 @@ import com.google.common.base.Objects;
 import info.ericlin.moviedb.MovieDbService;
 import info.ericlin.moviedb.glide.MovieDbImagePath;
 import info.ericlin.moviedb.model.Movie;
+import info.ericlin.moviedb.model.MovieWithDetails;
 import info.ericlin.pupularmovies.dagger.GlideApp;
 import info.ericlin.pupularmovies.factory.ViewModelFactory;
 import info.ericlin.util.ExecutorProvider;
@@ -55,14 +56,14 @@ public class MovieDetailsViewModel extends AndroidViewModel {
   }
 
   private LiveData<MoviePalette> getMoviePaletteById(int movieId) {
-    final Single<Movie> movie = movieDbService.getMovie(movieId);
+    final Single<MovieWithDetails> movie = movieDbService.getMovieWithDetails(movieId);
     final Single<Palette> palette = movie.flatMap(this::extractPalette);
     final Single<MoviePalette> moviePalette = movie.zipWith(palette, MoviePalette::create);
 
     return LiveDataReactiveStreams.fromPublisher(moviePalette.toFlowable());
   }
 
-  private Single<Palette> extractPalette(@NonNull Movie movie) {
+  private Single<Palette> extractPalette(@NonNull MovieWithDetails movie) {
 
     final FutureTarget<Bitmap> futureTarget =
         GlideApp.with(getApplication())
