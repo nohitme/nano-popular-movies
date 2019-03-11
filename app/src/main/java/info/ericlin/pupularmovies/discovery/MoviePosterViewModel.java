@@ -1,24 +1,23 @@
 package info.ericlin.pupularmovies.discovery;
 
 import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
-
 import com.google.auto.factory.AutoFactory;
 import com.google.auto.factory.Provided;
-
 import info.ericlin.moviedb.model.Movie;
+import info.ericlin.pupularmovies.PreferencesManager;
 import info.ericlin.pupularmovies.factory.ViewModelFactory;
 
 /** View model for {@link MoviePosterFragment} */
 @AutoFactory(implementing = ViewModelFactory.class)
 public class MoviePosterViewModel extends AndroidViewModel {
 
+  private final PreferencesManager preferencesManager;
   private final MoviePosterDataSourceFactoryFactory moviePosterDataSourceFactoryFactory;
 
   @Nullable private MovieCategory category;
@@ -26,8 +25,10 @@ public class MoviePosterViewModel extends AndroidViewModel {
 
   public MoviePosterViewModel(
       @NonNull Application application,
+      @Provided PreferencesManager preferencesManager,
       @Provided MoviePosterDataSourceFactoryFactory moviePosterDataSourceFactoryFactory) {
     super(application);
+    this.preferencesManager = preferencesManager;
     this.moviePosterDataSourceFactoryFactory = moviePosterDataSourceFactoryFactory;
   }
 
@@ -49,5 +50,17 @@ public class MoviePosterViewModel extends AndroidViewModel {
   @Nullable
   public LiveData<PagedList<Movie>> getMovieLists() {
     return movieLists;
+  }
+
+  // check if we need to validate data source automatically
+  public void validateDataSource() {
+    if (category == null || category != MovieCategory.FAVORITE) {
+      return;
+    }
+
+    if (preferencesManager.isFavoritesDirty() && movieLists.getValue() != null) {
+      movieLists.getValue().getDataSource().invalidate();
+      preferencesManager.setFavoritesDirty(false);
+    }
   }
 }

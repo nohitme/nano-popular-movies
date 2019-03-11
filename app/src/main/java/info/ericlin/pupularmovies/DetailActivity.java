@@ -97,14 +97,9 @@ public class DetailActivity extends AppCompatActivity implements DetailsAdapter.
 
     movieDetailsViewModel.isFavoriteLiveData().observe(this, saved -> {
       floatingActionButton.setActivated(saved);
-      if (saved) {
-        Toast.makeText(this, R.string.details_movie_saved, Toast.LENGTH_SHORT).show();
-      }
     });
 
-    floatingActionButton.setOnClickListener(v -> {
-      movieDetailsViewModel.toggleFavorite();
-    });
+    floatingActionButton.setOnClickListener(v -> movieDetailsViewModel.toggleFavorite());
   }
 
   @Override

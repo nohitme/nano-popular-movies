@@ -6,19 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
-import com.google.common.base.Preconditions;
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -27,6 +20,7 @@ import info.ericlin.moviedb.model.Movie;
 import info.ericlin.pupularmovies.DetailActivity;
 import info.ericlin.pupularmovies.R;
 import info.ericlin.pupularmovies.factory.ViewModelProviderFactory;
+import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -36,7 +30,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class MoviePosterFragment extends Fragment {
 
   private static final String ARGS_CATEGORY = "ARGS_CATEGORY";
-  private MovieCategory category;
 
   @Inject
   ViewModelProviderFactory viewModelProviderFactory;
@@ -45,6 +38,7 @@ public class MoviePosterFragment extends Fragment {
   RecyclerView recyclerView;
 
   private Unbinder unbinder;
+  private MoviePosterViewModel viewModel;
 
   public static MoviePosterFragment newInstance(@NonNull MovieCategory category) {
     final Bundle args = new Bundle();
@@ -64,8 +58,11 @@ public class MoviePosterFragment extends Fragment {
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     checkNotNull(getArguments());
-    this.category = (MovieCategory) getArguments().getSerializable(ARGS_CATEGORY);
-    checkNotNull(this.category);
+    MovieCategory category = (MovieCategory) getArguments().getSerializable(ARGS_CATEGORY);
+    checkNotNull(category);
+    viewModel =
+        ViewModelProviders.of(this, viewModelProviderFactory).get(MoviePosterViewModel.class);
+    viewModel.init(category);
   }
 
   @Nullable
@@ -90,10 +87,12 @@ public class MoviePosterFragment extends Fragment {
     MoviePosterAdapter moviePosterAdapter = new MoviePosterAdapter(this::onMovieClicked);
     recyclerView.setAdapter(moviePosterAdapter);
 
-    final MoviePosterViewModel viewModel =
-        ViewModelProviders.of(this, viewModelProviderFactory).get(MoviePosterViewModel.class);
-    viewModel.init(category);
     viewModel.getMovieLists().observe(this, moviePosterAdapter::submitList);
+  }
+
+  @Override public void onStart() {
+    super.onStart();
+    viewModel.validateDataSource();
   }
 
   private void onMovieClicked(@NonNull Movie movie, @NonNull MoviePosterViewHolder viewHolder) {

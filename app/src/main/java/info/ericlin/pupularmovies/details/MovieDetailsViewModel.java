@@ -23,6 +23,7 @@ import info.ericlin.moviedb.glide.MovieDbImagePath;
 import info.ericlin.moviedb.model.MovieReview;
 import info.ericlin.moviedb.model.MovieVideo;
 import info.ericlin.moviedb.model.MovieWithDetails;
+import info.ericlin.pupularmovies.PreferencesManager;
 import info.ericlin.pupularmovies.R;
 import info.ericlin.pupularmovies.dagger.GlideApp;
 import info.ericlin.pupularmovies.database.AppDatabase;
@@ -45,6 +46,7 @@ public class MovieDetailsViewModel extends AndroidViewModel {
 
   @NonNull private final MovieDbService movieDbService;
   @NonNull private final ModelConverter modelConverter;
+  @NonNull private final PreferencesManager preferencesManager;
   @NonNull private final ExecutorProvider executorProvider;
   @NonNull private final MovieDao movieDao;
 
@@ -66,10 +68,12 @@ public class MovieDetailsViewModel extends AndroidViewModel {
       @NonNull @Provided MovieDbService movieDbService,
       @NonNull @Provided AppDatabase appDatabase,
       @NonNull @Provided ModelConverter modelConverter,
+      @NonNull @Provided PreferencesManager preferencesManager,
       @NonNull @Provided ExecutorProvider executorProvider) {
     super(application);
     this.movieDbService = movieDbService;
     this.modelConverter = modelConverter;
+    this.preferencesManager = preferencesManager;
     this.executorProvider = executorProvider;
     movieDao = appDatabase.movieDao();
   }
@@ -150,6 +154,7 @@ public class MovieDetailsViewModel extends AndroidViewModel {
       } else {
         movieDao.deleteMovie(entity);
       }
+      preferencesManager.setFavoritesDirty(true);
     }).subscribeOn(executorProvider.ioScheduler()).subscribe();
   }
 

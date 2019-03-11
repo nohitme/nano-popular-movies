@@ -2,12 +2,12 @@ package info.ericlin.pupularmovies.database;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import info.ericlin.moviedb.model.Movie;
-import java.util.List;
 import javax.annotation.Nullable;
 
 /**
@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 public interface MovieDao {
 
   @Query("SELECT * FROM movie")
-  List<MovieEntity> getAllMovies();
+  DataSource.Factory<Integer, MovieEntity> getAllMovies();
 
   @Query("SELECT COUNT(*) FROM movie WHERE id = :id")
   LiveData<Integer> isMovieSaved(int id);
