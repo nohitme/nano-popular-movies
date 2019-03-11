@@ -1,7 +1,6 @@
 package info.ericlin.pupularmovies.discovery;
 
 import androidx.annotation.StringRes;
-
 import info.ericlin.pupularmovies.R;
 
 /**
@@ -10,6 +9,8 @@ import info.ericlin.pupularmovies.R;
  * for api details
  */
 public enum MovieCategory {
+
+  FAVORITE(R.string.tab_favorite),
   NOW_PLAYING(R.string.tab_now_playing),
   POPULAR(R.string.tab_popular),
   TOP_RATED(R.string.tab_top_rated),

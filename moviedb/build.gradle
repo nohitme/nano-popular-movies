@@ -1,48 +1,48 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+  compileSdkVersion 28
 
-    defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-        buildConfigField("String", "MOVIE_DB_API_KEY", "\"${getMovieDbApiKey()}\"")
-    }
+  defaultConfig {
+    minSdkVersion 21
+    targetSdkVersion 28
+    versionCode 1
+    versionName "1.0"
+    buildConfigField("String", "MOVIE_DB_API_KEY", "\"${getMovieDbApiKey()}\"")
+  }
 
-    compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
-    }
+  compileOptions {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+  }
 }
 
 def getMovieDbApiKey() {
-    return project.hasProperty("MOVIE_DB_API_KEY") ? project.getProperty("MOVIE_DB_API_KEY") : ""
+  return project.hasProperty("MOVIE_DB_API_KEY") ? project.getProperty("MOVIE_DB_API_KEY") : ""
 }
 
 dependencies {
-    implementation project(":util")
+  implementation project(":util")
 
-    implementation deps_retrofit
-    implementation deps_rxjava
+  implementation deps_retrofit
+  implementation deps_rxjava
 
-    implementation deps_retrofit_rxjava
-    implementation deps_retrofit_moshi
+  implementation deps_retrofit_rxjava
+  implementation deps_retrofit_moshi
 
-    // api "com.google.auto.value:auto-value-annotations:$version_auto_value"
-    annotationProcessor deps_auto_value
-    compileOnly deps_auto_value
-    annotationProcessor deps_auto_factory
+  // api "com.google.auto.value:auto-value-annotations:$version_auto_value"
+  annotationProcessor deps_auto_value
+  compileOnly deps_auto_value
+  annotationProcessor deps_auto_factory
 
-    implementation deps_dagger
-    annotationProcessor deps_dagger_compiler
+  implementation deps_dagger
+  annotationProcessor deps_dagger_compiler
 
-    compileOnly deps_auto_moshi_annotation
-    annotationProcessor deps_auto_moshi
+  compileOnly deps_auto_moshi_annotation
+  annotationProcessor deps_auto_moshi
 
-    implementation deps_timber
+  implementation deps_timber
 
-    // for the image path loader
-    compileOnly deps_glide
+  // for the image path loader
+  compileOnly deps_glide
 }

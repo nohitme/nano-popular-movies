@@ -36,6 +36,14 @@ dependencies {
     implementation "androidx.paging:paging-runtime:$paging_version"
     implementation "androidx.paging:paging-rxjava2:$paging_version"
 
+    def room_version = "2.1.0-alpha04"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    // optional - RxJava support for Room
+    implementation "androidx.room:room-rxjava2:$room_version"
+
     implementation deps_rxjava
     implementation deps_rxandroid
     implementation deps_okttp_logging

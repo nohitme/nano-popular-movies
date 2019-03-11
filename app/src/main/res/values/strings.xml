@@ -1,6 +1,7 @@
 <resources>
   <string name="app_name">Movies!</string>
 
+  <string name="tab_favorite">Favorite</string>
   <string name="tab_latest">Latest</string>
   <string name="tab_now_playing">Now Playing</string>
   <string name="tab_popular">Popular</string>
@@ -13,5 +14,6 @@
   <string name="details_header_videos">Videos (%1$d)</string>
   <string name="details_header_reviews">Reviews (%1$d)</string>
   <string name="details_review_author">%1$s says:</string>
+  <string name="details_movie_saved">Movie is saved</string>
 
 </resources>

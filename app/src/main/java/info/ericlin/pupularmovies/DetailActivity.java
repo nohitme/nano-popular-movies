@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import dagger.android.AndroidInjection;
 import info.ericlin.moviedb.model.MovieVideo;
 import info.ericlin.pupularmovies.details.DetailsAdapter;
@@ -41,6 +42,9 @@ public class DetailActivity extends AppCompatActivity implements DetailsAdapter.
 
   @BindView(R.id.details_recycler_view)
   RecyclerView recyclerView;
+
+  @BindView(R.id.details_fab)
+  FloatingActionButton floatingActionButton;
 
   private final DetailsAdapter detailsAdapter = new DetailsAdapter(this);
 
@@ -68,6 +72,15 @@ public class DetailActivity extends AppCompatActivity implements DetailsAdapter.
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
     recyclerView.setLayoutManager(linearLayoutManager);
     recyclerView.setAdapter(detailsAdapter);
+    recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+      @Override public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+        if (dy > 0 && floatingActionButton.getVisibility() == View.VISIBLE) {
+          floatingActionButton.hide();
+        } else if (dy < 0 && floatingActionButton.getVisibility() != View.VISIBLE) {
+          floatingActionButton.show();
+        }
+      }
+    });
 
     final int movieId = getIntent().getIntExtra(EXTRA_MOVIE_ID, 0);
     final MovieDetailsViewModel movieDetailsViewModel =
@@ -76,7 +89,22 @@ public class DetailActivity extends AppCompatActivity implements DetailsAdapter.
     movieDetailsViewModel.setMovieId(movieId);
     movieDetailsViewModel
         .getDetailsListLiveData()
-        .observe(this, detailsAdapter::submitList);
+        .observe(this, list -> {
+          // only set FAB visible when we have movie loaded
+          floatingActionButton.setVisibility(View.VISIBLE);
+          detailsAdapter.submitList(list);
+        });
+
+    movieDetailsViewModel.isFavoriteLiveData().observe(this, saved -> {
+      floatingActionButton.setActivated(saved);
+      if (saved) {
+        Toast.makeText(this, R.string.details_movie_saved, Toast.LENGTH_SHORT).show();
+      }
+    });
+
+    floatingActionButton.setOnClickListener(v -> {
+      movieDetailsViewModel.toggleFavorite();
+    });
   }
 
   @Override

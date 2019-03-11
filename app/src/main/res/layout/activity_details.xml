@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -28,4 +28,15 @@
       tools:title="MOVIE DETAILS"
       />
 
-</FrameLayout>
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/details_fab"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|end"
+      android:layout_margin="16dp"
+      android:visibility="gone"
+      app:srcCompat="@drawable/favorite_icon_selector"
+      tools:visibility="visible"
+      />
+
+</com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout>

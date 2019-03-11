@@ -3,6 +3,7 @@ package info.ericlin.pupularmovies.details;
 import android.app.Application;
 import android.graphics.Bitmap;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
@@ -24,35 +25,53 @@ import info.ericlin.moviedb.model.MovieVideo;
 import info.ericlin.moviedb.model.MovieWithDetails;
 import info.ericlin.pupularmovies.R;
 import info.ericlin.pupularmovies.dagger.GlideApp;
+import info.ericlin.pupularmovies.database.AppDatabase;
+import info.ericlin.pupularmovies.database.ModelConverter;
+import info.ericlin.pupularmovies.database.MovieDao;
+import info.ericlin.pupularmovies.database.MovieEntity;
 import info.ericlin.pupularmovies.factory.ViewModelFactory;
 import info.ericlin.util.ExecutorProvider;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import java.util.ArrayList;
 import java.util.List;
+import timber.log.Timber;
 
 /** View model for {@link info.ericlin.pupularmovies.DetailActivity} */
 @AutoFactory(implementing = ViewModelFactory.class)
 public class MovieDetailsViewModel extends AndroidViewModel {
 
-  public static final String SITE_YOUTUBE = "YouTube";
+  private static final String SITE_YOUTUBE = "YouTube";
+
   @NonNull private final MovieDbService movieDbService;
+  @NonNull private final ModelConverter modelConverter;
   @NonNull private final ExecutorProvider executorProvider;
+  @NonNull private final MovieDao movieDao;
 
   private final MutableLiveData<Integer> movieIdLiveData = new MutableLiveData<>();
   private final LiveData<List<Identifiable>> detailsListLiveData =
       Transformations.switchMap(movieIdLiveData, this::getDetailsListItem);
+  private final LiveData<Boolean> isFavoriteLiveData =
+      Transformations.switchMap(movieIdLiveData, this::isMovieSaved);
 
   // we only want youtube videos
   private Predicate<MovieVideo> youTubeFilter =
       video -> video != null && SITE_YOUTUBE.equalsIgnoreCase(video.site());
 
+  @Nullable
+  private MovieWithDetails movie;
+
   MovieDetailsViewModel(
       @NonNull Application application,
       @NonNull @Provided MovieDbService movieDbService,
+      @NonNull @Provided AppDatabase appDatabase,
+      @NonNull @Provided ModelConverter modelConverter,
       @NonNull @Provided ExecutorProvider executorProvider) {
     super(application);
     this.movieDbService = movieDbService;
+    this.modelConverter = modelConverter;
     this.executorProvider = executorProvider;
+    movieDao = appDatabase.movieDao();
   }
 
   public void setMovieId(int movieId) {
@@ -65,8 +84,15 @@ public class MovieDetailsViewModel extends AndroidViewModel {
     return detailsListLiveData;
   }
 
+  public LiveData<Boolean> isFavoriteLiveData() {
+    return isFavoriteLiveData;
+  }
+
   private LiveData<List<Identifiable>> getDetailsListItem(int movieId) {
-    final Single<MovieWithDetails> movie = movieDbService.getMovieWithDetails(movieId);
+    final Single<MovieWithDetails> movie = movieDbService
+        .getMovieWithDetails(movieId)
+        .doOnSuccess(m -> this.movie = m)
+        .doOnError(t -> this.movie = null);
     final Single<Palette> palette = movie.flatMap(this::extractPalette);
     final Single<MovieSwatch> moviePalette =
         movie.zipWith(palette, (m, p) -> MovieSwatch.create(m, p.getDominantSwatch()));
@@ -108,5 +134,27 @@ public class MovieDetailsViewModel extends AndroidViewModel {
     }
 
     return items;
+  }
+
+  public void toggleFavorite() {
+    if (this.movie == null) {
+      Timber.w("movie == null");
+      return;
+    }
+
+    Completable.fromAction(() -> {
+      MovieEntity entity = movieDao.getMovieById(movie.id());
+      if (entity == null) {
+        MovieEntity movieEntity = modelConverter.convertToEntity(this.movie);
+        movieDao.insertMovie(movieEntity);
+      } else {
+        movieDao.deleteMovie(entity);
+      }
+    }).subscribeOn(executorProvider.ioScheduler()).subscribe();
+  }
+
+  private LiveData<Boolean> isMovieSaved(int movieId) {
+    LiveData<Integer> count = movieDao.isMovieSaved(movieId);
+    return Transformations.map(count, c -> c > 0);
   }
 }

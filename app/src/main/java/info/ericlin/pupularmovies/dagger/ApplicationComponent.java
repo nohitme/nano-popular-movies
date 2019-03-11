@@ -1,27 +1,27 @@
 package info.ericlin.pupularmovies.dagger;
 
 import android.app.Application;
-
-import javax.inject.Singleton;
-
 import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 import info.ericlin.moviedb.MovieDbModule;
 import info.ericlin.pupularmovies.MovieApplication;
+import info.ericlin.pupularmovies.database.RoomDatabaseModule;
 import info.ericlin.util.ResourceModule;
+import javax.inject.Singleton;
 
 @Singleton
 @Component(
     modules = {
-      AndroidSupportInjectionModule.class,
-      AndroidViewModule.class,
-      ApplicationModule.class,
-      OkHttpModule.class,
-      MovieDbModule.class,
-      ViewModelModule.class,
-      ResourceModule.class,
+        AndroidSupportInjectionModule.class,
+        AndroidViewModule.class,
+        ApplicationModule.class,
+        OkHttpModule.class,
+        MovieDbModule.class,
+        ViewModelModule.class,
+        ResourceModule.class,
+        RoomDatabaseModule.class,
     })
 public interface ApplicationComponent extends AndroidInjector<MovieApplication> {
 
